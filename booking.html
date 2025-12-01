@@ -1,0 +1,85 @@
+{% extends "navbar.html" %}
+{% block title %}User Dashboard{% endblock %}
+{% block content %}
+
+<h1>Welcome {{ user_first_name }} {{ user_last_name }}</h1>
+
+<h2>Your Profile Info</h2>
+<p>ID: {{ user.id }}</p>
+<p>First Name: {{ user_first_name }}</p>
+<p>Last Name: {{ user_last_name }}</p>
+<p>Email: {{ user.email }}</p>
+<p>Role: {{ user.role.name }}</p>
+
+<p>FHIR ID:
+    {% if user.role == UserRoles.patient %}
+        {{ user.fhir_patient_id }}
+    {% elif user.role == UserRoles.gda %}
+        {{ user.fhir_practitioner_id }}
+    {% endif %}
+</p>
+
+---
+
+<h2>Your Appointments</h2>
+<ul id="appointments" style="list-style: none; padding: 0;">
+    {% for appt in appointments %}
+        <li data-datetime="{{ appt.start }}" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; padding: 5px; border-bottom: 1px solid #ccc;">
+            <span>
+                <strong>{{ appt.start.strftime('%Y-%m-%d') }}</strong>
+                von {{ appt.start.strftime('%H:%M') }} bis {{ appt.end.strftime('%H:%M') }} -
+
+                {% if user.role == UserRoles.patient %}
+                    Provider: {{ appt.provider.first_name }} {{ appt.provider.last_name }}
+                {% else %}
+                    Patient: {{ appt.patient.first_name }} {{ appt.patient.last_name }}
+                {% endif %}
+
+                </span>
+            <form method="POST" style="margin: 0;">
+                <input type="hidden" name="delete_appt_id" value="{{ appt.id }}">
+                <button type="submit" style="padding: 5px 10px; background-color: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                    Delete Booking
+                </button>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+
+---
+
+<h2>Book a New Appointment</h2>
+<form method="POST" action="{{ url_for('bookings', username=user.email) }}">
+    <label for="date">Datum</label>
+    <input type="date" id="date" name="date" required>
+
+    <label for="start_time">Startzeit</label>
+    <input type="time" id="start_time" name="start_time" required>
+
+    <label for="end_time">Endzeit</label>
+    <input type="time" id="end_time" name="end_time" required>
+
+    {% if user.role == UserRoles.patient %}
+        <label for="gda">Select Provider:</label><br>
+        <select id="gda" name="gda" class="large-select" required>
+            {% for gda in gdas %}
+                <option value="{{ gda.email }}">{{ gda.display_name }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+    {% elif user.role == UserRoles.gda %}
+        <label for="patient">Select Patient:</label><br>
+        <select id="patient" name="patient" class="large-select" required>
+            {% for patient in patients %}
+                <option value="{{ patient.email }}">{{ patient.display_name }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+    {% endif %}
+
+    <button type="submit" style="padding: 5px 10px; background-color: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer;">
+        Book Appointment
+    </button>
+</form>
+
+{% endblock %}

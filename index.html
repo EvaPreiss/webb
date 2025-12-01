@@ -1,0 +1,104 @@
+{% extends "navbar.html" %}
+{% block title %}Home - BIOMedical{% endblock %}
+
+{% block content %}
+<h1>Welcome to BIOMedical!</h1>
+<h2>Inclusive, accessible care—because your health matters to us.</h2>
+
+<blockquote>
+    At BIOMedical, we prioritize your well-being with a patient-centered approach.
+    Our dedicated specialists work together to provide comprehensive, compassionate care,
+    ensuring you receive the best treatment for your health needs.
+</blockquote>
+
+<!-- Doctor Cards -->
+<h3>Cardiology</h3>
+<div class="doctor-card">
+    <img src="{{ url_for('static', filename='staff_imgs/cardiology.png') }}" alt="Dr. Alexander Owens">
+    <div class="doctor-info">
+        <ul>
+            <li><strong>Name:</strong> Dr. Alexander Owens</li>
+            <li><strong>Age:</strong> 45</li>
+            <li><strong>Experience:</strong> 20 years in cardiology</li>
+            <li><strong>Specialization:</strong> Interventional cardiology and heart failure management</li>
+            <li><strong>Personality:</strong> Detail-oriented, empathetic, and analytical</li>
+            <li><strong>Hobbies:</strong> Cycling, reading medical research, and playing chess</li>
+        </ul>
+    </div>
+</div>
+
+<h3>Ophthalmology</h3>
+<div class="doctor-card">
+    <img src="{{ url_for('static', filename='staff_imgs/ophthalmologist.jpg') }}" alt="Dr. Sophia Ingram">
+    <div class="doctor-info">
+        <ul>
+            <li><strong>Name:</strong> Dr. Sophia Ingram</li>
+            <li><strong>Age:</strong> 38</li>
+            <li><strong>Experience:</strong> 12 years in ophthalmology</li>
+            <li><strong>Specialization:</strong> Retina diseases and laser eye surgery</li>
+            <li><strong>Personality:</strong> Precise, patient, and communicative</li>
+            <li><strong>Hobbies:</strong> Photography, painting, and hiking</li>
+        </ul>
+    </div>
+</div>
+
+<h3>Neurology</h3>
+<div class="doctor-card">
+    <img src="{{ url_for('static', filename='staff_imgs/neurologist.png') }}" alt="Dr. Elisa Bennett">
+    <div class="doctor-info">
+        <ul>
+            <li><strong>Name:</strong> Dr. Elisa Bennett</li>
+            <li><strong>Age:</strong> 42</li>
+            <li><strong>Experience:</strong> 15 years in neurology</li>
+            <li><strong>Specialization:</strong> Neurodegenerative disorders and stroke rehabilitation</li>
+            <li><strong>Personality:</strong> Analytical, compassionate, and innovative</li>
+            <li><strong>Hobbies:</strong> Piano playing, neuroscience research, and volunteering</li>
+        </ul>
+    </div>
+</div>
+
+<h3>Physiotherapy</h3>
+<div class="doctor-card">
+    <img src="{{ url_for('static', filename='staff_imgs/physiotherapy.png') }}" alt="Taylor McKenzie">
+    <div class="doctor-info">
+        <ul>
+            <li><strong>Name:</strong> Taylor McKenzie</li>
+            <li><strong>Age:</strong> 33</li>
+            <li><strong>Experience:</strong> 8 years in physiotherapy</li>
+            <li><strong>Specialization:</strong> Sports rehabilitation and chronic pain therapy</li>
+            <li><strong>Personality:</strong> Energetic, supportive, and motivational</li>
+            <li><strong>Hobbies:</strong> Running, yoga, and coaching youth sports</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Login Form -->
+<h2>Login to Book an Appointment</h2>
+<form method="POST" action="/login">
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" required><br>
+
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password" required><br>
+
+    <button type="submit">Login</button>
+</form>
+
+<!-- New User Form -->
+<h2>Create New User</h2>
+<form method="POST" action="{{ url_for('add_user') }}">
+    <label>First Name:</label><br>
+    <input type="text" name="first_name" required><br>
+
+    <label>Last Name:</label><br>
+    <input type="text" name="last_name" required><br>
+
+    <label>Email:</label><br>
+    <input type="email" name="email" required><br>
+
+    <label>Password:</label><br>
+    <input type="password" name="password" required><br>
+
+    <button type="submit">Add User</button>
+</form>
+{% endblock %}

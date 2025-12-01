@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking Confirmation</title>
+</head>
+<body>
+    <h1>Appointment Successfully Booked!</h1>
+
+    <p>Dear {{ user.first_name }}, your appointment has been successfully booked.</p>
+
+    <h2>Appointment Details:</h2>
+    <ul>
+        <li><strong>Date & Time:</strong> {{ appointment_datetime.strftime('%d %b %Y, %I:%M %p') }}</li>
+        <li><strong>Provider:</strong> {{ provider.first_name }} {{ provider.last_name }}</li>
+        {% if notes %}
+        <li><strong>Notes:</strong> {{ notes }}</li>
+        {% endif %}
+    </ul>
+
+    <a href="{{ url_for('user_dashboard', username=user.email) }}">Back to Dashboard</a>
+</body>
+</html>

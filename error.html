@@ -1,0 +1,14 @@
+{% extends "navbar.html" %}
+{% block title %}Error {{ status_code }} - {{ message }}{% endblock %}
+{% block content %}
+
+
+    <h1>An Error has occured</h1>
+    <h2>
+      HTTP Status Message:  {{ status_code }} {{ status_text }}
+    </h2>
+    <blockquote>{{ message }}</blockquote>
+
+
+
+ {% endblock %}
